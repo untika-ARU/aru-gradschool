@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graduate School — Dissertation & Thesis Portal | ARU</title>
+<style>
+:root{
+  --red:#8B1A1A;--red-dark:#6B1010;--red-mid:#A52020;
+  --gold:#D4922A;--gold-light:#F5C842;--gold-pale:#FFF8E6;
+  --cream:#FDF9F4;--text:#1c1c1c;--text-mid:#4a4a4a;--text-muted:#7a7a7a;
+  --border:#E8D8C0;--white:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Georgia,serif;background:var(--cream);color:var(--text);font-size:15px;line-height:1.7;}
+
+.site-header{background:var(--red-dark);color:#fff;position:sticky;top:0;z-index:100;border-bottom:4px solid var(--gold);}
+.header-inner{max-width:960px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.header-logo img{height:48px;width:auto;}
+.header-link{font-family:Arial,sans-serif;font-size:12px;border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.9);padding:5px 14px;border-radius:20px;text-decoration:none;}
+.header-link:hover{background:rgba(255,255,255,.15);}
+
+.hero{background:linear-gradient(135deg,var(--red-dark) 0%,var(--red) 60%,var(--red-mid) 100%);color:#fff;padding:40px 24px 36px;text-align:center;position:relative;overflow:hidden;}
+.hero-logo{margin-bottom:16px;}
+.hero-logo img{height:65px;width:auto;}
+.hero-eyebrow{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;}
+.hero h1{font-size:26px;font-weight:normal;display:inline-block;padding-bottom:10px;margin-bottom:8px;border-bottom:2px solid var(--gold);}
+.hero-sub{font-family:Arial,sans-serif;font-size:14px;color:rgba(255,255,255,.85);max-width:620px;margin:12px auto 0;line-height:1.7;}
+.hero-badges{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+.badge{font-family:Arial,sans-serif;font-size:12px;padding:5px 16px;border-radius:20px;font-weight:bold;}
+/* CHANGED: Doctoral = yellow text/border, Master's = gray */
+.badge-phd{background:rgba(255,255,255,.15);color:var(--gold-light);border:2px solid var(--gold-light);}
+.badge-ms{background:rgba(180,180,180,.25);color:#ccc;border:2px solid #999;}
+
+.tab-bar{max-width:960px;margin:0 auto;padding:20px 24px 0;display:flex;gap:4px;border-bottom:2px solid var(--border);flex-wrap:wrap;}
+.tab-btn{font-family:Arial,sans-serif;font-size:13px;padding:9px 18px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:6px 6px 0 0;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s;}
+.tab-btn:hover{color:var(--red);}
+.tab-btn.active{color:var(--red-dark);font-weight:bold;border-bottom-color:var(--gold);background:var(--white);}
+
+.main{max-width:960px;margin:0 auto;padding:28px 24px 60px;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* NOTICE BOX */
+.notice{background:#7a1010;border:2px solid var(--gold);border-radius:8px;padding:16px 20px;margin-bottom:24px;font-family:Arial,sans-serif;font-size:13.5px;color:#fff;line-height:1.8;}
+.notice ol{padding-left:20px;margin-top:6px;}
+.notice ol li{margin-bottom:4px;}
+.notice-title{font-weight:bold;font-size:14px;color:var(--gold-light);margin-bottom:8px;display:block;}
+
+/* SECTION LABEL — original dark red style */
+.section-label{font-family:Arial,sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dark);margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+
+/* PHASE DIVIDER */
+.phase-divider{display:flex;align-items:center;gap:12px;margin:24px 0 0;}
+.phase-divider-line{flex:1;height:1px;background:var(--border);}
+.phase-divider-label{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:bold;white-space:nowrap;}
+
+/* PUBLICATION INFO BOX */
+.pub-info{background:#fff3e0;border:1px solid var(--gold);border-left:4px solid var(--gold);border-radius:6px;padding:14px 16px;margin:16px 0 0;font-family:Arial,sans-serif;font-size:13px;color:#5a3a00;line-height:1.7;}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;}
+.step-card{background:var(--white);border:1px solid var(--border);border-top:none;padding:20px 20px 20px 0;display:flex;}
+.step-card:first-child{border-top:1px solid var(--border);border-radius:8px 8px 0 0;margin-top:12px;}
+.step-card:last-child{border-radius:0 0 8px 8px;}
+.step-left{width:72px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:2px;}
+
+/* CHANGED: Step number circle — wider, smaller font so multi-digit numbers like 18-19 fit clearly */
+.step-num{
+  width:42px;height:42px;border-radius:50%;background:var(--red);color:#fff;
+  font-family:Arial,sans-serif;font-size:11px;font-weight:bold;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;border:2px solid var(--gold);
+  text-align:center;line-height:1.2;padding:2px;
+}
+.step-line{width:2px;flex:1;background:var(--border);margin-top:6px;min-height:20px;}
+.step-card:last-child .step-line{display:none;}
+.step-body{flex:1;}
+
+/* CHANGED: step-phase — original gold, step-title — original dark red */
+.step-phase{font-family:Arial,sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;font-weight:bold;}
+.step-title{font-size:15px;font-weight:bold;color:var(--red-dark);margin-bottom:6px;}
+.step-desc{font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:10px;font-family:Arial,sans-serif;}
+.step-note{font-family:Arial,sans-serif;font-size:12px;color:var(--text-muted);font-style:italic;margin-bottom:8px;padding-left:10px;border-left:3px solid var(--gold-light);}
+.forms-row{display:flex;flex-wrap:wrap;gap:6px;}
+.form-chip{display:inline-flex;align-items:center;gap:5px;font-family:Arial,sans-serif;font-size:11px;padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:var(--cream);color:var(--red-dark);text-decoration:none;transition:background .12s,border-color .12s;}
+.form-chip:hover{background:var(--gold-pale);border-color:var(--gold);}
+.chip-code{font-weight:bold;color:var(--red);font-size:10px;}
+
+/* ALL FORMS GRID */
+.forms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:10px;margin-top:8px;}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px;text-decoration:none;transition:box-shadow .15s,border-color .15s;}
+.form-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(212,146,42,.2);}
+.form-card-code{font-family:Arial,sans-serif;font-size:11px;font-weight:bold;color:var(--red);}
+.form-card-name{font-family:Arial,sans-serif;font-size:12px;color:var(--red-dark);line-height:1.4;}
+.form-card-dl{font-family:Arial,sans-serif;font-size:11px;color:var(--text-muted);margin-top:auto;padding-top:6px;border-top:1px solid var(--border);}
+
+/* CONTACT BOX */
+.contact-box{background:linear-gradient(135deg,var(--red-dark),var(--red));color:#fff;border-radius:10px;padding:24px 28px;margin-top:32px;display:flex;gap:20px;}
+.contact-icon{font-size:28px;flex-shrink:0;}
+.contact-body h3{font-size:16px;font-weight:normal;color:var(--gold-light);margin-bottom:8px;}
+.contact-body p{font-family:Arial,sans-serif;font-size:13px;color:rgba(255,255,255,.85);line-height:1.8;}
+.contact-body a{color:var(--gold-light);}
+
+.master-blank{text-align:center;padding:60px 24px;font-family:Arial,sans-serif;color:var(--text-muted);}
+
+.site-footer{background:var(--red-dark);color:rgba(255,255,255,.5);text-align:center;padding:16px 24px;font-family:Arial,sans-serif;font-size:11px;border-top:3px solid var(--gold);}
+.site-footer a{color:rgba(255,255,255,.6);}
+
+@media(max-width:600px){
+  .hero h1{font-size:20px;}.step-left{width:56px;}
+  .forms-grid{grid-template-columns:1fr 1fr;}.tab-btn{font-size:12px;padding:8px 10px;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-inner">
+<div class="header-logo">
+<!-- Logo: file must be in same folder as index.html on GitHub -->
+<img src="Graduate_School_Eng.jpg" alt="ARU Graduate School" onerror="this.style.display='none'">
+</div>
+<a class="header-link" href="https://www.aru.ac.th/grad" target="_blank">www.aru.ac.th/grad</a>
+</div>
+</header>
+
+<div class="hero">
+<div class="hero-logo">
+<img src="Graduate_School_Eng.jpg" alt="ARU Graduate School Logo" onerror="this.style.display='none'">
+</div>
+<p class="hero-eyebrow">Phranakhon Si Ayutthaya Rajabhat University · International Students</p>
+<h1>Dissertation &amp; Thesis Procedures</h1>
+<p class="hero-sub">Access all required forms and detailed guidelines for dissertation and thesis submission here. All documents are available for download — no need to request individually.</p>
+<div class="hero-badges">
+<span class="badge badge-phd">📘 Doctoral Degree</span>
+<span class="badge badge-ms">📗 Master's Degree</span>
+</div>
+</div>
+
+<div class="tab-bar">
+<button class="tab-btn active" onclick="switchTab('phd',this)">📘 Doctoral Degree</button>
+<button class="tab-btn" onclick="switchTab('master',this)">📗 Master's Degree</button>
+<button class="tab-btn" onclick="switchTab('forms',this)">📋 All Forms (A–Z)</button>
+<button class="tab-btn" onclick="switchTab('general',this)">📁 General Forms</button>
+</div>
+
+<main class="main">
+
+<!-- ═══ PhD TAB ═══ -->
+<div id="tab-phd" class="tab-content active">
+
+<div class="notice">
+<span class="notice-title">⚠️ Important — Please read before proceeding</span>
+<ol>
+<li>Students must complete and obtain approval for each step before proceeding.</li>
+<li>All G.S. forms must be approved by advisors and the Dean prior to advancement.</li>
+<li>G.S. forms must be accompanied by necessary supporting evidence (e.g. invitation letters, participant consent notices) and included in the Appendix.</li>
+</ol>
+</div>
+
+<p class="section-label">Doctoral program — 32-step procedure · Announced April 2026</p>
+<div class="steps">
+
+<!-- PHASE 1 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 1 — Coursework &amp; Setup</span><div class="phase-divider-line"></div></div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Coursework</p>
+<p class="step-title">Complete all required coursework</p>
+<p class="step-desc">Students must complete all required coursework before advancing to the dissertation phase.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Examination</p>
+<p class="step-title">Qualifying Examination (QE)</p>
+<p class="step-desc">Students must pass the Qualifying Examination before proceeding to dissertation title development.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Advisor</p>
+<p class="step-title">Dissertation title development with advisor</p>
+<p class="step-desc">Work with your assigned advisor to develop your dissertation title and research direction.</p>
+</div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 2 — Dissertation Title</span><div class="phase-divider-line"></div></div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Title Submission</p>
+<p class="step-title">Submit proposed dissertation title</p>
+<p class="step-desc">Submit your proposed dissertation title with supportive information to your advisor for approval before submitting it to the Graduate School.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1LaiW9n75xzEQChlErj0TdDpitAtAIYDa/view?usp=sharing" target="_blank"><span class="chip-code">G.S.5</span> Title Approval Form</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1JUErmFP_IpwNDjuPB3AOkYxxHCbcmndz/view?usp=sharing" target="_blank"><span class="chip-code">G.S.5-1</span> Supportive Information</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">5–6</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Approval</p>
+<p class="step-title">Committee approval &amp; Graduate School announcement</p>
+<p class="step-desc">Obtain program committee approval. The Graduate School will officially announce approved titles.</p>
+<p class="step-note">Use G.S.5-2 only if a student is required to change the title.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/19VDPUT2VATJ433ZfFYWts96i5W7F-zyN/view?usp=sharing" target="_blank"><span class="chip-code">G.S.5-2</span> Title Change Request</a>
+</div>
+</div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 3 — 3-Chapter Proposal</span><div class="phase-divider-line"></div></div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">7</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Writing</p>
+<p class="step-title">Develop 3-chapter proposal</p>
+<p class="step-desc">Write your 3-chapter proposal. Consistently consult your advisor and incorporate all feedback to ensure the research meets required standards before requesting examination.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">8</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Request</p>
+<p class="step-title">Submit 3-chapter examination request</p>
+<p class="step-desc">Upon advisor approval, submit G.S.7 with 5 copies of your 3-chapter proposal to the Graduate School for scheduling the examination.</p>
+<p class="step-note">⏱ Submit at least 30 days before the examination. Doctoral degree: 5 copies required.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1KFGy6O3QKLHAmzzt5YSP_C-KBhqmc07k/view?usp=sharing" target="_blank"><span class="chip-code">G.S.7</span> Proposal Examination Request</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1bOX-sB1N04uS1QKYnypIGhafvkbCC5_o/view?usp=sharing" target="_blank"><span class="chip-code">G.S.7 Guide</span> Proposal Writing Guidelines</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">9–11</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Examination</p>
+<p class="step-title">3-Chapter examination → Revisions → Results announcement</p>
+<p class="step-desc">Take the 3-chapter examination. Make all required revisions based on committee feedback. Graduate School announces students who have passed.</p>
+</div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 4 — Research Process</span><div class="phase-divider-line"></div></div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">12</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Instrument</p>
+<p class="step-title">Develop research instrument</p>
+<p class="step-desc">Develop the research instrument tailored to your research in order to obtain IOC (Index of Item-Objective Congruence).</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">13</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Expert Evaluation</p>
+<p class="step-title">Invite 5 experts to evaluate the instrument</p>
+<p class="step-desc">Submit G.S.8 to invite 5 qualified experts. The Graduate School will issue official invitation letters. IOC determines whether the instrument can proceed to data collection.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1bBk4BgE6ebZTK9IzQLx9qjUQICzhbBph/view?usp=sharing" target="_blank"><span class="chip-code">G.S.8</span> Invitation to Specialists</a>
+<a class="form-chip" href="https://docs.google.com/document/d/1AwsbyhsqEvG5XsMMI3hJS-ON2ybHpG_Z/edit?usp=sharing" target="_blank"><span class="chip-code">IOC</span> IOC Assessment Template</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">14</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Pilot Study</p>
+<p class="step-title">Instrument testing — pilot study (n = 30)</p>
+<p class="step-desc">After IOC approval, submit G.S.9 with IOC result and instrument (questionnaire) to conduct a pilot study with 30 participants. Data analysis will determine Cronbach's Alpha.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/12wM7gMklqJjKBS7unZn9iwR4MKt7_x9W/view?usp=sharing" target="_blank"><span class="chip-code">G.S.9</span> Instrument Testing Letter</a>
+<a class="form-chip" href="https://docs.google.com/document/d/1m7RrP0_Lws0FjId1gde-dJRsF0AVDn3g/edit?usp=sharing" target="_blank"><span class="chip-code">Questionnaire</span> Questionnaire Template</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">15</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Data Collection</p>
+<p class="step-title">Collect data from target population</p>
+<p class="step-desc">After instrument approval, submit G.S.10 + approved instrument (questionnaire) to collect data from the full target population and analyze research results.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1cKdJKnosF7ZJ5L24601X9PCAJWp923kR/view?usp=sharing" target="_blank"><span class="chip-code">G.S.10</span> Data Collection Letter</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">16</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Writing</p>
+<p class="step-title">Prepare 5-chapter dissertation</p>
+<p class="step-desc">Write the complete 5-chapter dissertation summarizing all research findings.</p>
+<p class="step-note">📌 Begin working on your publication article during this stage.</p>
+</div>
+</div>
+
+<!-- PHASE 5 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 5 — Publication</span><div class="phase-divider-line"></div></div>
+
+<div class="pub-info">
+📢 <strong>Publication Requirements:</strong> Students must follow journal formatting rules, include required information <strong>(name, advisor, co-advisor if applicable, program, and Phranakhon Si Ayutthaya Rajabhat University)</strong>, and submit articles with the G.S.11-1 form to the advisor for approval, then to the Graduate School. Graduate School approval is required before publication. <strong>Two published articles are mandatory for doctoral completion</strong>, and acceptance letters must be attached to the G.S.11 form when requesting defense.
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">17</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Publication</p>
+<p class="step-title">Obtain approval to publish &amp; receive acceptance letters</p>
+<p class="step-desc">Submit G.S.11-1 to your advisor then to the Graduate School for official publication approval. Upon receiving acceptance letters for two articles, attach them to G.S.11 for the defense request.</p>
+<p class="step-note">⚠️ Beware of predatory/cloned journals. All articles must be based on your dissertation research.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1XVxAv2Ke-bWysrPRZ6Yc17cox4bkLAvE/view?usp=sharing" target="_blank"><span class="chip-code">G.S.11-1</span> Publication Approval Form</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">18–19</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Dissertation</p>
+<p class="step-title">Submit 5-chapter dissertation to advisor &amp; revise</p>
+<p class="step-desc">Submit the full dissertation to your advisors for review. Revise based on all feedback and suggestions before requesting the oral examination.</p>
+</div>
+</div>
+
+<!-- PHASE 6 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 6 — Oral Examination (Defense)</span><div class="phase-divider-line"></div></div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">20</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Compliance</p>
+<p class="step-title">Plagiarism check (1st) &amp; AI usage declaration</p>
+<p class="step-desc">Conduct plagiarism detection — similarity must not exceed 30%. Submit G.S.14 with the report. Complete AI usage declaration. Both required for the examination request (Step 21).</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1Wmn25GPG6DbAqM6UsfHP-oc8BYlUUGXN/view?usp=sharing" target="_blank"><span class="chip-code">G.S.14</span> Plagiarism Detection Report</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1h5FhUiTdbLifrdSnrVs2SPPK_X8MZjrK/view?usp=sharing" target="_blank"><span class="chip-code">G.S.AI</span> AI Usage Declaration</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">21</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Request</p>
+<p class="step-title">Submit oral examination request</p>
+<p class="step-desc">Submit G.S.11 with all required documents: G.S.11-1, publication acceptance letters, G.S.14, G.S.AI, and 5 copies of dissertation.</p>
+<p class="step-note">⏱ Submit at least 30 days before examination. Doctoral fee: 8,000 THB.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1vWGsCQXT7nFcwzwGBFGyjQilHCYyePM9/view?usp=sharing" target="_blank"><span class="chip-code">G.S.11</span> Examination Request</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1XVxAv2Ke-bWysrPRZ6Yc17cox4bkLAvE/view?usp=sharing" target="_blank"><span class="chip-code">G.S.11-1</span> Publication Approval</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1Wmn25GPG6DbAqM6UsfHP-oc8BYlUUGXN/view?usp=sharing" target="_blank"><span class="chip-code">G.S.14</span> Plagiarism Report</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1h5FhUiTdbLifrdSnrVs2SPPK_X8MZjrK/view?usp=sharing" target="_blank"><span class="chip-code">G.S.AI</span> AI Declaration</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">22–23</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Defense</p>
+<p class="step-title">Dissertation defense &amp; post-defense revisions</p>
+<p class="step-desc">Present and defend your dissertation. Make all required revisions within the deadline set by the committee (15, 30, or 45 days).</p>
+</div>
+</div>
+
+<!-- PHASE 7 -->
+<div class="phase-divider"><div class="phase-divider-line"></div><span class="phase-divider-label">Phase 7 — Format Check &amp; Graduation</span><div class="phase-divider-line"></div></div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">24–25</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Format Check</p>
+<p class="step-title">Format review &amp; revision</p>
+<p class="step-desc">Submit G.S.12 with 1 copy of the completed dissertation for format and abstract review. Revise as directed.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1xdHAKaEs6eGNKOys9m85BuJpL5KjPldw/view?usp=sharing" target="_blank"><span class="chip-code">G.S.12</span> Format Review Request</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">26</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Compliance</p>
+<p class="step-title">Plagiarism check (2nd) &amp; AI declaration</p>
+<p class="step-desc">Second plagiarism check and AI declaration required after all revisions. Both must be attached to the graduation application (Step 27).</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1Wmn25GPG6DbAqM6UsfHP-oc8BYlUUGXN/view?usp=sharing" target="_blank"><span class="chip-code">G.S.14</span> Plagiarism Report</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1h5FhUiTdbLifrdSnrVs2SPPK_X8MZjrK/view?usp=sharing" target="_blank"><span class="chip-code">G.S.AI</span> AI Declaration</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">27</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Graduation</p>
+<p class="step-title">Apply for graduation — submit 1 hardbound copy</p>
+<!-- CHANGED: "5 hardbound copies" → "1 hardbound copy" -->
+<p class="step-desc">Submit 1 hardbound copy of the dissertation together with all required forms to the Graduate School.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1xdHAKaEs6eGNKOys9m85BuJpL5KjPldw/view?usp=sharing" target="_blank"><span class="chip-code">G.S.12</span> Format Review</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1jYbOz_-7d9wWdI1JjX_lSMe-531HcXxU/view?usp=sharing" target="_blank"><span class="chip-code">G.S.13</span> Graduation Request</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1Wmn25GPG6DbAqM6UsfHP-oc8BYlUUGXN/view?usp=sharing" target="_blank"><span class="chip-code">G.S.14</span> Plagiarism Report</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1h5FhUiTdbLifrdSnrVs2SPPK_X8MZjrK/view?usp=sharing" target="_blank"><span class="chip-code">G.S.AI</span> AI Declaration</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1CESsEWRqkX9Ir5e47SEk5mMaPyYLZvWr/view?usp=sharing" target="_blank"><span class="chip-code">G.S.15</span> Publication Cert.</a>
+<a class="form-chip" href="https://drive.google.com/file/d/1yIwsq94TBw0hv4tS8B068t5T3WpZ47kd/view?usp=sharing" target="_blank"><span class="chip-code">G.S.16</span> Dissertation Submission</a>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">28–30</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">Approval Chain</p>
+<p class="step-title">Graduate School → Academic Council → University Council</p>
+<p class="step-desc">Graduation application is reviewed through three approval levels before degrees are officially conferred.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-left"><div class="step-num">31–32</div></div>
+<div class="step-body">
+<p class="step-phase">Completion</p>
+<p class="step-title">Transcript issuance &amp; collection</p>
+<p class="step-desc">Official transcripts are issued and ready for collection from the Graduate School office. Processing takes approximately 7–15 working days after all approvals are complete.</p>
+</div>
+</div>
+
+</div><!-- /steps -->
+
+<div class="contact-box">
+<div class="contact-icon">🏛️</div>
+<div class="contact-body">
+<h3>Graduate School Office — ARU</h3>
+<p>Phranakhon Si Ayutthaya Rajabhat University<br>
+Website: <a href="https://www.aru.ac.th/grad" target="_blank">www.aru.ac.th/grad</a><br>
+Email: <a href="mailto:grad@aru.ac.th">grad@aru.ac.th</a><br>
+Dean: Associate Professor Apichat Pansuwan, Ph.D.<br>
+Office hours: Monday – Friday, 08:30 – 16:30</p>
+</div>
+</div>
+</div><!-- /tab-phd -->
+
+<!-- ═══ MASTER TAB ═══ -->
+<div id="tab-master" class="tab-content">
+<div class="master-blank">
+<p style="font-size:40px;margin-bottom:16px;">📗</p>
+<p style="font-size:18px;color:var(--red-dark);font-weight:bold;margin-bottom:8px;">Master's Degree Procedures</p>
+<p style="font-size:14px;">Content coming soon. Please contact the Graduate School for guidance.</p>
+<p style="margin-top:16px;font-size:13px;">📧 <a href="mailto:grad@aru.ac.th" style="color:var(--red);">grad@aru.ac.th</a></p>
+</div>
+</div>
+
+<!-- ═══ ALL FORMS TAB ═══ -->
+<div id="tab-forms" class="tab-content">
+<p class="section-label">All dissertation &amp; thesis forms — click any card to open &amp; download</p>
+<!-- RESTORED: "How to use" instruction text -->
+<p style="font-family:Arial,sans-serif;font-size:13px;color:var(--text-mid);margin-bottom:16px;">Click any card to open the PDF. Use the download button (⬇) to save it to your device. Print, complete, and obtain the required signatures before submitting to the Graduate School.</p>
+<div class="forms-grid">
+<a class="form-card" href="https://drive.google.com/file/d/19TiqnR7PcegiOegzXsTWUwC9YWSuye6l/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.3</span><span class="form-card-name">Advisor Appointment Form</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1Tzj2a3CAFpvH3kyZJDhlrjYkXZ68-0ft/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.4</span><span class="form-card-name">Doctoral Dissertation Concept Paper</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1LaiW9n75xzEQChlErj0TdDpitAtAIYDa/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.5</span><span class="form-card-name">Dissertation Title Approval &amp; Proposal</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1JUErmFP_IpwNDjuPB3AOkYxxHCbcmndz/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.5-1</span><span class="form-card-name">Title Proposal Supportive Information</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/19VDPUT2VATJ433ZfFYWts96i5W7F-zyN/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.5-2</span><span class="form-card-name">Dissertation Title Change Request</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1UKYCOiNa3ehGBB5xeo2tO4Y0KvYPWyjx/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.6</span><span class="form-card-name">Independent Study Title &amp; Proposal Exam</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1KFGy6O3QKLHAmzzt5YSP_C-KBhqmc07k/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.7</span><span class="form-card-name">Dissertation Proposal Examination Request</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1bOX-sB1N04uS1QKYnypIGhafvkbCC5_o/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.7 Guide</span><span class="form-card-name">Proposal Writing Guidelines &amp; Template</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1bBk4BgE6ebZTK9IzQLx9qjUQICzhbBph/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.8</span><span class="form-card-name">Invitation to Specialists (IOC)</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/12wM7gMklqJjKBS7unZn9iwR4MKt7_x9W/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.9</span><span class="form-card-name">Instrument Testing Data Collection</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1cKdJKnosF7ZJ5L24601X9PCAJWp923kR/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.10</span><span class="form-card-name">Data Collection / Interview Letter</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1vWGsCQXT7nFcwzwGBFGyjQilHCYyePM9/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.11</span><span class="form-card-name">Thesis / Dissertation Examination Request</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1XVxAv2Ke-bWysrPRZ6Yc17cox4bkLAvE/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.11-1</span><span class="form-card-name">Publication Approval Form (before defense)</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1xdHAKaEs6eGNKOys9m85BuJpL5KjPldw/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.12</span><span class="form-card-name">Format &amp; Abstract Review Request</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1jYbOz_-7d9wWdI1JjX_lSMe-531HcXxU/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.13</span><span class="form-card-name">Graduation Request Form</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1Wmn25GPG6DbAqM6UsfHP-oc8BYlUUGXN/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.14</span><span class="form-card-name">Plagiarism Detection Report (max 30%)</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1CESsEWRqkX9Ir5e47SEk5mMaPyYLZvWr/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.15</span><span class="form-card-name">Publication Certification (for graduation)</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1yIwsq94TBw0hv4tS8B068t5T3WpZ47kd/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.16</span><span class="form-card-name">Thesis / Dissertation Submission Form</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://drive.google.com/file/d/1h5FhUiTdbLifrdSnrVs2SPPK_X8MZjrK/view?usp=sharing" target="_blank"><span class="form-card-code">G.S.AI</span><span class="form-card-name">AI Usage Declaration Form</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://docs.google.com/document/d/1AwsbyhsqEvG5XsMMI3hJS-ON2ybHpG_Z/edit?usp=sharing" target="_blank"><span class="form-card-code">IOC</span><span class="form-card-name">IOC Assessment Template</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+<a class="form-card" href="https://docs.google.com/document/d/1m7RrP0_Lws0FjId1gde-dJRsF0AVDn3g/edit?usp=sharing" target="_blank"><span class="form-card-code">Questionnaire</span><span class="form-card-name">Questionnaire Template</span><span class="form-card-dl">⬇ Open &amp; Download</span></a>
+</div>
+</div>
+
+<!-- ═══ GENERAL FORMS TAB ═══ -->
+<div id="tab-general" class="tab-content">
+<p class="section-label">General administrative forms — available to all graduate students</p>
+<div class="steps">
+<div class="step-card">
+<div class="step-left"><div class="step-num" style="background:var(--gold);color:var(--red-dark);font-size:10px;">G.S.1</div><div class="step-line"></div></div>
+<div class="step-body">
+<p class="step-phase">General Request</p>
+<p class="step-title">General Request Form</p>
+<p class="step-desc">Use for: transcript request, student status certification, name correction, replacement graduation certificate, and other general requests. Fees: 50–500 THB depending on request type.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1WnoFXogiDCDKnhoXg7F39Geu3UhZCDyN/view?usp=sharing" target="_blank"><span class="chip-code">G.S.1</span> General Request Form</a>
+</div>
+</div>
+</div>
+<div class="step-card">
+<div class="step-left"><div class="step-num" style="background:var(--gold);color:var(--red-dark);font-size:10px;">G.S.2</div></div>
+<div class="step-body">
+<p class="step-phase">Credit Transfer</p>
+<p class="step-title">Transfer / Exemption Credits Request</p>
+<p class="step-desc">Use to request transfer or exemption of credits from a previous institution. Fee: 200 THB per credit. Courses must not be more than 10 years old. Attach education transcript and course description.</p>
+<div class="forms-row">
+<a class="form-chip" href="https://drive.google.com/file/d/1FRrUA4MExJhHfXFNLiXRxVQ0VhJnI1u8/view?usp=sharing" target="_blank"><span class="chip-code">G.S.2</span> Credit Transfer Form</a>
+</div>
+</div>
+</div>
+</div>
+<div class="contact-box" style="margin-top:28px">
+<div class="contact-icon">🏛️</div>
+<div class="contact-body">
+<h3>Graduate School Office — ARU</h3>
+<p>Phranakhon Si Ayutthaya Rajabhat University<br>
+Website: <a href="https://www.aru.ac.th/grad" target="_blank">www.aru.ac.th/grad</a><br>
+Email: <a href="mailto:grad@aru.ac.th">grad@aru.ac.th</a><br>
+Office hours: Monday – Friday, 08:30 – 16:30</p>
+</div>
+</div>
+</div>
+
+</main>
+<footer class="site-footer">
+Graduate School · Phranakhon Si Ayutthaya Rajabhat University &nbsp;·&nbsp; Last updated April 2026 &nbsp;·&nbsp;
+<a href="https://www.aru.ac.th/grad" target="_blank">www.aru.ac.th/grad</a> &nbsp;·&nbsp;
+<a href="mailto:grad@aru.ac.th">grad@aru.ac.th</a>
+</footer>
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
